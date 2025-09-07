@@ -36,6 +36,16 @@
                 <input id="pitchRange" type="range" min="0.5" max="2" step="0.1" value="1" />
                 <span id="pitchVal">1.0</span>
               </div>
+              <div class="ctrl">
+                <label for="themeSelect">Tema</label>
+                <select id="themeSelect">
+                  <option value="classic">Classic</option>
+                  <option value="minimal">Minimal</option>
+                  <option value="neon">Neon</option>
+                  <option value="imessage">iMessage</option>
+                  <option value="cartoon">Cartoon</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
@@ -48,18 +58,6 @@
           <input id="userInput" type="text" placeholder="Scrivi un messaggio..." />
           <button id="micBtn" title="Parla (microfono)">🎤</button>
           <button id="sendBtn">➤</button>
-
-          <!-- Tema chat spostato in basso a destra -->
-          <div id="theme-wrapper">
-            <label for="themeSelect">Tema:</label>
-            <select id="themeSelect">
-              <option value="classic">Classic</option>
-              <option value="minimal">Minimal</option>
-              <option value="neon">Neon</option>
-              <option value="imessage">iMessage</option>
-              <option value="cartoon">Cartoon</option>
-            </select>
-          </div>
         </div>
 
         <!-- Indicatore ascolto -->
