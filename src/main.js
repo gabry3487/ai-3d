@@ -12,7 +12,7 @@ const scene = new THREE.Scene();
 
 // Sfondo (riempie, potrebbe “stirare” in resize; semplice e leggero)
 const textureLoader = new THREE.TextureLoader();
-textureLoader.load("/src/assets/sfondo.jpg", (tex) => {
+textureLoader.load("/assets/sfondo.jpg", (tex) => {
   scene.background = tex;
 });
 
@@ -35,7 +35,7 @@ scene.add(new THREE.AmbientLight(0xffffff, 0.4));
 const loader = new GLTFLoader();
 let mixer = null;
 
-loader.load("/src/assets/Personaggio.glb", (gltf) => {
+loader.load("/assets/Personaggio.glb", (gltf) => {
   const model = gltf.scene;
   model.position.set(-0.2, -1, 0);
   model.scale.set(1.6, 1.6, 1.6);
