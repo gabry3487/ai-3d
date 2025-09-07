@@ -40,18 +40,18 @@ html, body {
 /* ====== Header ====== */
 #chat-header {
   background: #171717;
-  padding: 12px 14px;
+  padding: 10px;
   border-bottom: 1px solid #1f1f1f;
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr auto; /* 🔹 corretto */
   gap: 8px 12px;
   align-items: center;
 }
 
 .brand {
-  font-weight: 800;
-  font-size: 26px; /* 🔹 più grande */
-  letter-spacing: .5px;
+  font-weight: 700;
+  font-size: 18px; /* 🔹 rimesso come prima */
+  letter-spacing: .2px;
   color: #f3f3f3;
   white-space: nowrap;
 }
