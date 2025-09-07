@@ -192,7 +192,7 @@ muteBtn.addEventListener("click", function () {
 });
 
 /* =========================
-   Microphone (now auto-send)
+   Microphone (auto-send)
 ========================= */
 var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 var recognition = null;
@@ -216,4 +216,33 @@ if (SpeechRecognition) {
   };
 
   recognition.onresult = function (event) {
-    var transcript = Array.prototype.slice.call(event.resu
+    var transcript = Array.prototype.slice.call(event.results)
+      .map(function (r) { return (r[0] && r[0].transcript) || ""; })
+      .join(" ")
+      .trim();
+    if (transcript) {
+      input.value = transcript;
+      sendMessage(); // 🔹 invia subito invece di fermarsi nella textbox
+    }
+  };
+
+  recognition.onerror = function () {
+    micBtn.classList.remove("recording");
+    micBtn.textContent = "🎤";
+    listeningIndicator.textContent = "";
+  };
+
+  micBtn.addEventListener("click", function () {
+    try {
+      window.speechSynthesis.cancel();
+      if (micBtn.classList.contains("recording")) {
+        recognition.stop();
+      } else {
+        recognition.start();
+      }
+    } catch (e) { /* no-op */ }
+  });
+} else {
+  micBtn.disabled = true;
+  micBtn.title = "Microfono non supportato in questo browser";
+}
