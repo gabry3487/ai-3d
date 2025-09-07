@@ -11,6 +11,7 @@ const pitchRange = document.getElementById("pitchRange");
 const rateVal = document.getElementById("rateVal");
 const pitchVal = document.getElementById("pitchVal");
 const listeningIndicator = document.getElementById("listening-indicator");
+const themeSelect = document.getElementById("themeSelect");
 
 // Endpoint backend: Vite env o localhost
 const API_BASE = (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_API_BASE)
@@ -245,4 +246,26 @@ if (SpeechRecognition) {
 } else {
   micBtn.disabled = true;
   micBtn.title = "Microfono non supportato in questo browser";
+}
+
+/* =========================
+   Theme switcher
+========================= */
+if (themeSelect) {
+  const savedTheme = localStorage.getItem("ai-3d-theme") || "classic";
+  document.body.classList.add("theme-" + savedTheme);
+  themeSelect.value = savedTheme;
+
+  themeSelect.addEventListener("change", function () {
+    document.body.classList.remove(
+      "theme-classic",
+      "theme-minimal",
+      "theme-neon",
+      "theme-imessage",
+      "theme-cartoon"
+    );
+    const theme = themeSelect.value;
+    document.body.classList.add("theme-" + theme);
+    localStorage.setItem("ai-3d-theme", theme);
+  });
 }
