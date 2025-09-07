@@ -6,10 +6,6 @@ const messages = document.getElementById("messages");
 const muteBtn = document.getElementById("muteBtn");
 const micBtn = document.getElementById("micBtn");
 const voiceSelect = document.getElementById("voiceSelect");
-const rateRange = document.getElementById("rateRange");
-const pitchRange = document.getElementById("pitchRange");
-const rateVal = document.getElementById("rateVal");
-const pitchVal = document.getElementById("pitchVal");
 const listeningIndicator = document.getElementById("listening-indicator");
 const themeSelect = document.getElementById("themeSelect");
 
@@ -44,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
     else if (hour >= 12 && hour < 18) saluto = "Buon pomeriggio";
     else if (hour >= 18 && hour < 23) saluto = "Buonasera";
     else saluto = "Ciao nottambulo";
-    addMessage(saluto + ", sono AI-3D. Vuoi iniziare a parlare con me?", "bot");
+    addMessage(saluto + ", sono AI-3D 🤖. Vuoi iniziare a parlare con me?", "bot");
   }
 });
 
@@ -60,7 +56,7 @@ function cleanText(text) {
 }
 
 /* =========================
-   Voices (optgroup: Italian / Others)
+   Voices
 ========================= */
 function fillVoiceSelect(voices) {
   voiceSelect.innerHTML = "";
@@ -126,17 +122,6 @@ setTimeout(listVoicesAndPopulate, 0);
 voiceSelect.addEventListener("change", applySelectedVoice);
 
 /* =========================
-   Rate / Pitch
-========================= */
-function updateRatePitchLabels() {
-  rateVal.textContent = Number(rateRange.value).toFixed(1) + "x";
-  pitchVal.textContent = Number(pitchRange.value).toFixed(1);
-}
-rateRange.addEventListener("input", updateRatePitchLabels);
-pitchRange.addEventListener("input", updateRatePitchLabels);
-updateRatePitchLabels();
-
-/* =========================
    TTS
 ========================= */
 function speak(text) {
@@ -147,8 +132,6 @@ function speak(text) {
   var utterance = new SpeechSynthesisUtterance(cleaned);
   utterance.lang = "it-IT";
   if (selectedVoice) utterance.voice = selectedVoice;
-  utterance.rate = Number(rateRange.value);
-  utterance.pitch = Number(pitchRange.value);
 
   window.speechSynthesis.speak(utterance);
 }
