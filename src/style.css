@@ -103,20 +103,23 @@ html, body {
 /* ====== Temi chat ====== */
 .theme-classic .user { background: #1976d2; color: #fff; margin-left: auto; }
 .theme-classic .bot  { background: #e0e0e0; color: #000; margin-right: auto; }
+.theme-classic .brand { color: #00bcd4; }
 
 .theme-minimal .user { background: #0d47a1; color: #fff; margin-left: auto; }
 .theme-minimal .bot  { background: #90caf9; color: #000; margin-right: auto; }
+.theme-minimal .brand { color: #00bcd4; }
 
 .theme-neon .user { background: #2196f3; color: #fff; margin-left: auto; box-shadow: 0 0 10px #2196f3; }
 .theme-neon .bot  { background: #03a9f4; color: #000; margin-right: auto; box-shadow: 0 0 10px #03a9f4; }
-
 .theme-neon .brand { color: #00bcd4; }
 
 .theme-imessage .user { background: #007aff; color: #fff; margin-left: auto; }
 .theme-imessage .bot  { background: #e5e5ea; color: #000; margin-right: auto; }
+.theme-imessage .brand { color: #00bcd4; }
 
 .theme-cartoon .user { background: #64b5f6; color: #000; margin-left: auto; border: 2px solid #000; }
 .theme-cartoon .bot  { background: #bbdefb; color: #000; margin-right: auto; border: 2px solid #000; }
+.theme-cartoon .brand { color: #00bcd4; }
 
 /* ====== Input ====== */
 #input-area {
