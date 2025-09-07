@@ -110,6 +110,8 @@ html, body {
 .theme-neon .user { background: #2196f3; color: #fff; margin-left: auto; box-shadow: 0 0 10px #2196f3; }
 .theme-neon .bot  { background: #03a9f4; color: #000; margin-right: auto; box-shadow: 0 0 10px #03a9f4; }
 
+.theme-neon .brand { color: #00bcd4; }
+
 .theme-imessage .user { background: #007aff; color: #fff; margin-left: auto; }
 .theme-imessage .bot  { background: #e5e5ea; color: #000; margin-right: auto; }
 
