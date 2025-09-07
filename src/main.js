@@ -53,7 +53,7 @@ loader.load("/src/assets/Personaggio.glb", (gltf) => {
       setTimeout(() => {
         action.reset();
         action.play(); // Riparte l'animazione
-      }, 2000);  // Pausa di 2000ms (2 secondi)
+      }, 2000);  // Pausa ridotta a 2000ms (2 secondi)
     });
   }
 });
