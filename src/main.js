@@ -40,7 +40,7 @@ let mixer = null;
 loader.load("/assets/Personaggio.glb", (gltf) => {
   const model = gltf.scene;
   model.position.set(-0.2, -1, 0);
-  model.scale.set(1.25, 1.25, 1.25);
+  model.scale.set(1.5, 1.5, 1.5);
   scene.add(model);
 
   if (gltf.animations.length > 0) {
