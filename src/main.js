@@ -31,7 +31,7 @@ dirLight.position.set(5, 10, 7);
 scene.add(dirLight);
 scene.add(new THREE.AmbientLight(0xffffff, 0.4));
 
-// Modello GLB con animazione con loop continuo
+// Modello GLB con animazione con pause (loop: 1 volta + pausa 2s)
 const loader = new GLTFLoader();
 let mixer = null;
 
@@ -45,8 +45,16 @@ loader.load("/src/assets/Personaggio.glb", (gltf) => {
     mixer = new THREE.AnimationMixer(model);
     const clip = gltf.animations[0];
     const action = mixer.clipAction(clip);
-    action.setLoop(THREE.LoopRepeat, Infinity);  // Imposta la ripetizione continua
+    action.setLoop(THREE.LoopOnce, 1); // Impostato loop solo una volta
+    action.clampWhenFinished = true;
     action.play();
+
+    mixer.addEventListener("finished", () => {
+      setTimeout(() => {
+        action.reset();
+        action.play(); // Riparte l'animazione
+      }, 2000);  // Pausa di 2000ms (2 secondi)
+    });
   }
 });
 
