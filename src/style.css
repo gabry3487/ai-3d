@@ -1,145 +1,56 @@
-/* ====== Layout base ====== */
-html, body {
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: #0b0b0b;
-  color: #eee;
-}
-
-#app { display: flex; height: 100%; width: 100%; }
-
-/* ====== Scena 3D ====== */
-#scene-container {
-  flex: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #000;
-}
-
-#scene {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  display: block;
-}
-
-/* ====== Chat ====== */
-#chatbox {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  border-left: 1px solid #1d1d1d;
-  background: #111;
-}
-
-/* ====== Header ====== */
-#chat-header {
-  background: #171717;
-  padding: 10px;
-  border-bottom: 1px solid #1f1f1f;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 8px 12px;
-  align-items: center;
-}
-
-.brand { font-weight: 700; letter-spacing: .2px; color: #f3f3f3; white-space: nowrap; }
-
-#audio-controls {
-  display: grid; grid-auto-rows: auto; row-gap: 6px; justify-items: end; max-width: 480px;
-}
-#audio-controls .row { display: grid; column-gap: 8px; }
-#audio-controls .row-1 { grid-template-columns: minmax(140px,1fr) auto; }
-#audio-controls .row-2 { grid-template-columns: 1fr 1fr 1fr; align-items: center; }
-
-#voiceSelect, #themeSelect {
-  background: #1b1b1b; color: #eee; border: 1px solid #333;
-  border-radius: 6px; padding: 6px 8px; font-size: 12px; min-width: 120px; max-width: 200px;
-}
-
-.ctrl { display: grid; grid-template-columns: auto 1fr auto; align-items: center; column-gap: 8px; font-size: 12px; }
-.ctrl label { color: #bfbfbf; }
-.ctrl input[type="range"] { width: 100%; accent-color: #25d366; }
-.ctrl span { color: #b7ffb7; font-variant-numeric: tabular-nums; }
-
-#muteBtn {
-  background: #1b1b1b; border: 1px solid #2a2a2a; border-radius: 6px;
-  font-size: 14px; cursor: pointer; color: #eee; padding: 6px 10px; line-height: 1; height: 30px;
-}
-
-/* ====== Messaggi base ====== */
-#messages {
-  flex: 1; padding: 12px; overflow-y: auto; scrollbar-gutter: stable;
-}
-#messages::-webkit-scrollbar { width: 10px; }
-#messages::-webkit-scrollbar-track { background: #121212; border-left: 1px solid #111; }
-#messages::-webkit-scrollbar-thumb { background: #2b2b2b; border-radius: 8px; }
-#messages::-webkit-scrollbar-thumb:hover { background: #3a3a3a; }
-#messages { scrollbar-width: thin; scrollbar-color: #3a3a3a #121212; }
-
-.message {
-  padding: 10px 14px;
-  border-radius: 16px;
-  margin: 6px 0;
-  max-width: 75%;
-  line-height: 1.4;
-  word-wrap: break-word;
-}
-
-/* ====== Temi chat ====== */
-
-/* Classic */
-.theme-classic .user { background: #1976d2; color: #fff; margin-left: auto; }
-.theme-classic .bot  { background: #e0e0e0; color: #000; margin-right: auto; }
-
-/* Minimal */
-.theme-minimal .user { background: #0d47a1; color: #fff; margin-left: auto; }
-.theme-minimal .bot  { background: #90caf9; color: #000; margin-right: auto; }
-
-/* Neon */
-.theme-neon .user { background: #2196f3; color: #fff; margin-left: auto; box-shadow: 0 0 10px #2196f3; }
-.theme-neon .bot  { background: #03a9f4; color: #000; margin-right: auto; box-shadow: 0 0 10px #03a9f4; }
-
-/* iMessage */
-.theme-imessage .user { background: #007aff; color: #fff; margin-left: auto; }
-.theme-imessage .bot  { background: #e5e5ea; color: #000; margin-right: auto; }
-
-/* Cartoon */
-.theme-cartoon .user { background: #64b5f6; color: #000; margin-left: auto; border: 2px solid #000; }
-.theme-cartoon .bot  { background: #bbdefb; color: #000; margin-right: auto; border: 2px solid #000; }
+/* ...tutto il resto invariato... */
 
 /* ====== Input ====== */
 #input-area {
-  display: flex; border-top: 1px solid #1f1f1f; background: #151515; padding: 8px; gap: 8px;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #1f1f1f;
+  background: #151515;
+  padding: 8px;
+  gap: 8px;
+  position: relative;
 }
 
 #userInput {
-  flex: 1; padding: 10px 12px; border: 1px solid #2a2a2a;
-  background: #0f0f0f; color: #eee; border-radius: 8px; outline: none;
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #2a2a2a;
+  background: #0f0f0f;
+  color: #eee;
+  border-radius: 8px;
+  outline: none;
 }
 #userInput::placeholder { color: #888; }
 
 #micBtn, #sendBtn {
-  background: #212121; color: #eee; border: 1px solid #2a2a2a;
-  padding: 0 14px; border-radius: 8px; cursor: pointer; min-width: 44px; height: 40px;
+  background: #212121;
+  color: #eee;
+  border: 1px solid #2a2a2a;
+  padding: 0 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  min-width: 44px;
+  height: 40px;
 }
 #micBtn.recording { background: #a00; border-color: #f55; color: #fff; }
 #sendBtn:hover, #micBtn:hover { background: #2a2a2a; }
 
-/* ====== Indicatore ascolto ====== */
-#listening-indicator { margin: 4px 12px 10px; font-size: 12px; color: #f55; min-height: 14px; }
-
-/* ====== Responsive ====== */
-@media (max-width: 1100px) {
-  #audio-controls { max-width: 360px; }
-  #voiceSelect, #themeSelect { max-width: 180px; }
+/* Tema chat in basso a destra */
+#theme-wrapper {
+  position: absolute;
+  right: 10px;
+  bottom: -35px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
 }
-@media (max-width: 900px) {
-  #chat-header { grid-template-columns: 1fr; }
-  #audio-controls { justify-items: stretch; max-width: none; }
+
+#themeSelect {
+  background: #1b1b1b;
+  color: #eee;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 12px;
 }
