@@ -64,22 +64,26 @@ function cleanText(text) {
 function fillVoiceSelect(voices) {
   voiceSelect.innerHTML = "";
 
-  const itVoices = voices.filter(v => (v.lang || "").toLowerCase().startsWith("it"));
-  const otherVoices = voices.filter(v => !(v.lang || "").toLowerCase().startsWith("it"));
+  var itVoices = voices.filter(function (v) {
+    return (v.lang || "").toLowerCase().indexOf("it") === 0;
+  });
+  var otherVoices = voices.filter(function (v) {
+    return (v.lang || "").toLowerCase().indexOf("it") !== 0;
+  });
 
-  const ogIt = document.createElement("optgroup");
+  var ogIt = document.createElement("optgroup");
   ogIt.label = "Italiano";
-  itVoices.forEach(v => {
-    const opt = document.createElement("option");
+  itVoices.forEach(function (v) {
+    var opt = document.createElement("option");
     opt.value = v.name;
     opt.textContent = v.name + " (" + v.lang + ")";
     ogIt.appendChild(opt);
   });
 
-  const ogOther = document.createElement("optgroup");
+  var ogOther = document.createElement("optgroup");
   ogOther.label = "Altre";
-  otherVoices.forEach(v => {
-    const opt = document.createElement("option");
+  otherVoices.forEach(function (v) {
+    var opt = document.createElement("option");
     opt.value = v.name;
     opt.textContent = v.name + " (" + v.lang + ")";
     ogOther.appendChild(opt);
@@ -88,16 +92,15 @@ function fillVoiceSelect(voices) {
   voiceSelect.appendChild(ogIt);
   voiceSelect.appendChild(ogOther);
 
-  const savedName = localStorage.getItem("ai-3d-voice");
-  const all = itVoices.concat(otherVoices);
-
-  if (savedName && all.find(v => v.name === savedName)) {
+  var savedName = localStorage.getItem("ai-3d-voice");
+  var all = itVoices.concat(otherVoices);
+  if (savedName && all.find(function (v) { return v.name === savedName; })) {
     voiceSelect.value = savedName;
   } else {
-    const prefer =
-      itVoices.find(v => v.name.includes("Elsa")) ||
-      itVoices.find(v => v.name.includes("Alice")) ||
-      itVoices.find(v => v.name.includes("Samantha")) ||
+    var prefer =
+      itVoices.find(function (v) { return v.name.indexOf("Elsa") >= 0; }) ||
+      itVoices.find(function (v) { return v.name.indexOf("Alice") >= 0; }) ||
+      itVoices.find(function (v) { return v.name.indexOf("Samantha") >= 0; }) ||
       itVoices[0] || otherVoices[0];
     if (prefer) voiceSelect.value = prefer.name;
   }
@@ -105,13 +108,13 @@ function fillVoiceSelect(voices) {
 }
 
 function applySelectedVoice() {
-  const name = voiceSelect.value;
+  var name = voiceSelect.value;
   localStorage.setItem("ai-3d-voice", name);
-  selectedVoice = voicesCache.find(v => v.name === name) || null;
+  selectedVoice = voicesCache.find(function (v) { return v.name === name; }) || null;
 }
 
 function listVoicesAndPopulate() {
-  const voices = window.speechSynthesis.getVoices() || [];
+  var voices = window.speechSynthesis.getVoices() || [];
   if (!voices.length) return;
   voicesCache = voices;
   fillVoiceSelect(voices);
@@ -139,8 +142,8 @@ function speak(text) {
   if (muted || !window.speechSynthesis) return;
   window.speechSynthesis.cancel();
 
-  const cleaned = cleanText(text);
-  const utterance = new SpeechSynthesisUtterance(cleaned);
+  var cleaned = cleanText(text);
+  var utterance = new SpeechSynthesisUtterance(cleaned);
   utterance.lang = "it-IT";
   if (selectedVoice) utterance.voice = selectedVoice;
   utterance.rate = Number(rateRange.value);
@@ -152,59 +155,47 @@ function speak(text) {
 /* =========================
    Send message
 ========================= */
-sendBtn.setAttribute("aria-label", "Invia messaggio");
-sendBtn.setAttribute("title", "Invia messaggio");
-
 sendBtn.addEventListener("click", sendMessage);
-input.addEventListener("keydown", e => {
+input.addEventListener("keydown", function (e) {
   if (e.key === "Enter") sendMessage();
 });
 
 async function sendMessage() {
-  const text = input.value.trim();
+  var text = input.value.trim();
   if (!text) return;
   addMessage(text, "user");
   input.value = "";
 
   try {
-    const res = await fetch(API_BASE + "/chat", {
+    var res = await fetch(API_BASE + "/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: text })
     });
-
     if (!res.ok) throw new Error("HTTP " + res.status);
-
-    const data = await res.json();
-    const reply = data.reply || "Nessuna risposta ricevuta.";
+    var data = await res.json();
+    var reply = data.reply || "Nessuna risposta ricevuta.";
     addMessage(reply, "bot");
     speak(reply);
   } catch (e) {
-    console.error("Chat error:", e);
-    addMessage("Errore di connessione con il server (" + e.message + ")", "bot");
+    addMessage("Errore di connessione con il server.", "bot");
   }
 }
 
 /* =========================
    Mute
 ========================= */
-muteBtn.setAttribute("aria-label", "Attiva/Disattiva audio");
-muteBtn.setAttribute("title", "Attiva/Disattiva audio");
-
-muteBtn.addEventListener("click", () => {
+muteBtn.addEventListener("click", function () {
   muted = !muted;
   muteBtn.textContent = muted ? "🔇" : "🔊";
   if (muted) window.speechSynthesis.cancel();
 });
 
 /* =========================
-   Microphone
+   Microphone (now auto-send)
 ========================= */
-micBtn.setAttribute("aria-label", "Attiva microfono");
-micBtn.setAttribute("title", "Attiva microfono");
-
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-let recognition = null;
+var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+var recognition = null;
 
 if (SpeechRecognition) {
   recognition = new SpeechRecognition();
@@ -212,48 +203,17 @@ if (SpeechRecognition) {
   recognition.continuous = false;
   recognition.interimResults = false;
 
-  recognition.onstart = () => {
+  recognition.onstart = function () {
     micBtn.classList.add("recording");
     micBtn.textContent = "⏺";
     listeningIndicator.textContent = "Sto ascoltando...";
   };
 
-  recognition.onend = () => {
+  recognition.onend = function () {
     micBtn.classList.remove("recording");
     micBtn.textContent = "🎤";
     listeningIndicator.textContent = "";
   };
 
-  recognition.onresult = event => {
-    const transcript = Array.from(event.results)
-      .map(r => (r[0] && r[0].transcript) || "")
-      .join(" ")
-      .trim();
-    if (transcript) {
-      input.value = transcript; // non invia automaticamente
-      input.focus();
-    }
-  };
-
-  recognition.onerror = () => {
-    micBtn.classList.remove("recording");
-    micBtn.textContent = "🎤";
-    listeningIndicator.textContent = "";
-  };
-
-  micBtn.addEventListener("click", () => {
-    try {
-      window.speechSynthesis.cancel();
-      if (micBtn.classList.contains("recording")) {
-        recognition.stop();
-      } else {
-        recognition.start();
-      }
-    } catch (e) {
-      console.error("Mic error:", e);
-    }
-  });
-} else {
-  micBtn.disabled = true;
-  micBtn.title = "Microfono non supportato in questo browser";
-}
+  recognition.onresult = function (event) {
+    var transcript = Array.prototype.slice.call(event.resu
