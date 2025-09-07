@@ -4,17 +4,15 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 // Renderer
 const canvas = document.getElementById("scene");
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth * 0.75, window.innerHeight);
-renderer.outputColorSpace = THREE.SRGBColorSpace; // colori corretti
 
 // Scena
 const scene = new THREE.Scene();
 
-// Sfondo
+// Sfondo (riempie, potrebbe “stirare” in resize; semplice e leggero)
 const textureLoader = new THREE.TextureLoader();
-textureLoader.load("/assets/sfondo.jpg", (tex) => {
-  tex.colorSpace = THREE.SRGBColorSpace;
+textureLoader.load("/src/assets/sfondo.jpg", (tex) => {
   scene.background = tex;
 });
 
@@ -33,11 +31,11 @@ dirLight.position.set(5, 10, 7);
 scene.add(dirLight);
 scene.add(new THREE.AmbientLight(0xffffff, 0.4));
 
-// Modello GLB con animazione + pausa
+// Modello GLB con animazione con loop continuo
 const loader = new GLTFLoader();
 let mixer = null;
 
-loader.load("/assets/Personaggio.glb", (gltf) => {
+loader.load("/src/assets/Personaggio.glb", (gltf) => {
   const model = gltf.scene;
   model.position.set(-0.2, -1, 0);
   model.scale.set(1.6, 1.6, 1.6);
@@ -47,16 +45,8 @@ loader.load("/assets/Personaggio.glb", (gltf) => {
     mixer = new THREE.AnimationMixer(model);
     const clip = gltf.animations[0];
     const action = mixer.clipAction(clip);
-    action.setLoop(THREE.LoopOnce, 1);
-    action.clampWhenFinished = true;
+    action.setLoop(THREE.LoopRepeat, Infinity);  // Imposta la ripetizione continua
     action.play();
-
-    mixer.addEventListener("finished", () => {
-      setTimeout(() => {
-        action.reset();
-        action.play();
-      }, 0);
-    });
   }
 });
 
