@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
     else if (hour >= 12 && hour < 18) saluto = "Buon pomeriggio";
     else if (hour >= 18 && hour < 23) saluto = "Buonasera";
     else saluto = "Ciao nottambulo";
-    addMessage(saluto + ", sono AI-3D 🤖. Vuoi iniziare a parlare con me?", "bot");
+    addMessage(saluto + ", sono AI-3D. Vuoi iniziare a parlare con me?", "bot");
   }
 });
 
@@ -223,7 +223,7 @@ if (SpeechRecognition) {
       .trim();
     if (transcript) {
       input.value = transcript;
-      sendMessage(); // 🔹 invia subito invece di fermarsi nella textbox
+      sendMessage(); // auto-send
     }
   };
 
