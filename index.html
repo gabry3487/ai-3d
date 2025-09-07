@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <title>AI-3D</title>
+    <link rel="stylesheet" href="./src/style.css" />
+    <link rel="icon" type="image/png" href="./favicon.png" />
+  </head>
+  <body>
+    <div id="app">
+      <!-- Colonna scena 3D -->
+      <div id="scene-container">
+        <canvas id="scene"></canvas>
+      </div>
+
+      <!-- Colonna chat -->
+      <div id="chatbox">
+        <!-- Header con controlli -->
+        <div id="chat-header">
+          <span class="brand">AI-3D</span>
+
+          <div id="audio-controls">
+            <div class="row row-1">
+              <select id="voiceSelect" title="Seleziona voce"></select>
+              <button id="muteBtn" title="Mute/Unmute">🔊</button>
+            </div>
+
+            <div class="row row-2">
+              <div class="ctrl">
+                <label for="rateRange">Velocità</label>
+                <input id="rateRange" type="range" min="0.5" max="2" step="0.1" value="1" />
+                <span id="rateVal">1.0x</span>
+              </div>
+              <div class="ctrl">
+                <label for="pitchRange">Intonazione</label>
+                <input id="pitchRange" type="range" min="0.5" max="2" step="0.1" value="1" />
+                <span id="pitchVal">1.0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Messaggi -->
+        <div id="messages"></div>
+
+        <!-- Input -->
+        <div id="input-area">
+          <input id="userInput" type="text" placeholder="Scrivi un messaggio..." />
+          <button id="micBtn" title="Parla (microfono)">🎤</button>
+          <button id="sendBtn">➤</button>
+        </div>
+
+        <!-- Indicatore ascolto -->
+        <p id="listening-indicator"></p>
+      </div>
+    </div>
+
+    <!-- Script -->
+    <script type="module" src="./src/main.js"></script>
+    <script type="module" src="./src/chat.js"></script>
+  </body>
+</html>
