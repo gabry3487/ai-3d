@@ -55,7 +55,7 @@ loader.load("/assets/Personaggio.glb", (gltf) => {
       setTimeout(() => {
         action.reset();
         action.play();
-      }, 5000);
+      }, 0);
     });
   }
 });
