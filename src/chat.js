@@ -137,31 +137,58 @@ function speak(text) {
 }
 
 /* =========================
+   Textarea auto-resize + invio
+========================= */
+function autosize() {
+  input.style.height = "auto";
+  input.style.height = input.scrollHeight + "px";
+}
+input.addEventListener("input", autosize);
+
+// Enter = invia, Shift+Enter = newline
+input.addEventListener("keydown", function (e) {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+/* =========================
    Send message
 ========================= */
 sendBtn.addEventListener("click", sendMessage);
-input.addEventListener("keydown", function (e) {
-  if (e.key === "Enter") sendMessage();
-});
 
 async function sendMessage() {
   var text = input.value.trim();
   if (!text) return;
   addMessage(text, "user");
   input.value = "";
+  autosize(); // torna alla riga minima
+
+  // typing placeholder
+  const typing = (function () {
+    const div = document.createElement("div");
+    div.className = "message bot typing";
+    div.textContent = "⋯";
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+    return div;
+  })();
 
   try {
-    var res = await fetch(API_BASE + "/chat", {
+    const res = await fetch(API_BASE + "/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: text })
     });
     if (!res.ok) throw new Error("HTTP " + res.status);
-    var data = await res.json();
-    var reply = data.reply || "Nessuna risposta ricevuta.";
+    const data = await res.json();
+    typing.remove();
+    const reply = data.reply || "Nessuna risposta ricevuta.";
     addMessage(reply, "bot");
     speak(reply);
   } catch (e) {
+    typing.remove();
     addMessage("Errore di connessione con il server.", "bot");
   }
 }
@@ -206,6 +233,7 @@ if (SpeechRecognition) {
       .trim();
     if (transcript) {
       input.value = transcript;
+      autosize();
       sendMessage(); // auto-send
     }
   };
@@ -252,4 +280,3 @@ if (themeSelect) {
     localStorage.setItem("ai-3d-theme", theme);
   });
 }
-
